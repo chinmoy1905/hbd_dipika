@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Birthday Surprise 🎂</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:100vh;
+overflow:hidden;
+
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+
+font-family:'Poppins',sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#0f172a,
+#1e293b,
+#312e81
+);
+
+background-size:300% 300%;
+animation:bgMove 15s ease infinite;
+
+position:relative;
+color:white;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* subtle stars */
+
+.glitter{
+position:absolute;
+
+width:3px;
+height:3px;
+
+background:white;
+
+border-radius:50%;
+
+opacity:.4;
+
+box-shadow:
+0 0 5px white;
+
+animation:twinkle 4s infinite;
+
+pointer-events:none;
+}
+
+@keyframes twinkle{
+
+0%,100%{
+opacity:.2;
+transform:scale(.7);
+}
+
+50%{
+opacity:1;
+transform:scale(1.8);
+}
+
+}
+
+/* clean title */
+
+h1{
+
+font-family:'Pacifico',cursive;
+
+font-size:38px;
+
+color:white;
+
+text-align:center;
+
+margin-bottom:20px;
+
+letter-spacing:1px;
+
+font-weight:normal;
+
+text-shadow:
+0 2px 8px rgba(0,0,0,.25);
+
+animation:floatText 3s ease-in-out infinite;
+
+}
+
+@keyframes floatText{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-6px);
+}
+
+}
+
+
+/* glass card */
+
+.card{
+
+width:92%;
+max-width:360px;
+
+padding:25px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:blur(16px);
+
+border:
+1px solid rgba(255,255,255,.08);
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:
+0 8px 30px rgba(0,0,0,.4);
+
+z-index:2;
+}
+
+
+/* cake */
+
+#fullCake{
+
+font-size:120px;
+
+position:relative;
+
+animation:bounce 2s infinite;
+
+}
+
+@keyframes bounce{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+}
+
+
+/* candles */
+
+.candles{
+
+position:absolute;
+
+top:-15px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:14px;
+
+}
+
+.candle{
+
+width:8px;
+height:35px;
+
+background:white;
+
+border-radius:4px;
+
+position:relative;
+
+}
+
+.flame{
+
+position:absolute;
+
+top:-12px;
+left:50%;
+
+transform:
+translateX(-50%)
+rotate(-45deg);
+
+width:12px;
+height:12px;
+
+background:#ff9f1c;
+
+border-radius:
+50% 50% 50% 0;
+
+animation:flicker .5s infinite alternate;
+
+}
+
+@keyframes flicker{
+
+from{
+opacity:.7;
+}
+
+to{
+opacity:1;
+transform:
+translateX(-50%)
+rotate(-45deg)
+scale(1.2);
+}
+
+}
+
+
+/* buttons */
+
+button{
+
+margin-top:20px;
+
+padding:14px 28px;
+
+border:none;
+
+border-radius:50px;
+
+background:white;
+
+font-weight:600;
+
+font-size:16px;
+
+cursor:pointer;
+
+transition:.3s;
+}
+
+button:hover{
+transform:scale(1.08);
+}
+
+
+/* knife */
+
+#knifeArea{
+
+display:none;
+
+margin-top:15px;
+
+}
+
+#knife{
+
+font-size:60px;
+
+animation:
+knifeMove 1s infinite alternate;
+
+}
+
+@keyframes knifeMove{
+
+from{
+transform:rotate(-25deg);
+}
+
+to{
+transform:
+translateY(8px)
+rotate(12deg);
+}
+
+}
+
+
+/* cake pieces */
+
+#pieces{
+
+display:none;
+
+justify-content:center;
+
+gap:60px;
+
+font-size:80px;
+
+margin-top:15px;
+
+}
+
+#leftPiece,
+#rightPiece{
+
+transition:2s;
+
+}
+
+
+/* clean messages */
+
+.message{
+
+opacity:0;
+
+font-family:'Pacifico',cursive;
+
+font-size:28px;
+
+color:white;
+
+margin-top:20px;
+
+text-align:center;
+
+transition:1.5s;
+
+text-shadow:
+0 2px 10px rgba(0,0,0,.25);
+
+}
+
+#giftMessage{
+
+opacity:0;
+
+font-size:17px;
+
+line-height:1.7;
+
+color:rgba(255,255,255,.95);
+
+margin-top:15px;
+
+transition:1.5s;
+
+padding:0 10px;
+
+}
+
+
+/* photo */
+
+#surpriseArea{
+
+display:none;
+
+margin-top:20px;
+
+}
+
+.finalPhoto{
+
+position:relative;
+
+width:180px;
+height:180px;
+
+margin:auto;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+}
+
+/* frame rotates */
+
+.photoFrame{
+
+position:absolute;
+
+width:190px;
+height:190px;
+
+border-radius:50%;
+
+background:
+conic-gradient(
+#ff4d8d,
+#ffd700,
+#00e5ff,
+#b84dff,
+#ff4d8d
+);
+
+animation:ringRotate 6s linear infinite;
+
+box-shadow:
+0 0 20px rgba(255,255,255,.3);
+
+}
+
+.photoFrame::before{
+
+content:"";
+
+position:absolute;
+
+inset:8px;
+
+border-radius:50%;
+
+background:#121826;
+
+}
+
+/* image static */
+
+.finalPhoto img{
+
+position:relative;
+
+z-index:2;
+
+width:165px;
+height:165px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:3px solid rgba(255,255,255,.7);
+
+}
+
+@keyframes ringRotate{
+
+from{
+transform:rotate(0deg);
+}
+
+to{
+transform:rotate(360deg);
+}
+
+}
+
+
+/* gift */
+
+.giftBox{
+
+font-size:65px;
+
+margin-top:20px;
+
+cursor:pointer;
+
+animation:giftJump 1s infinite;
+
+}
+
+@keyframes giftJump{
+
+50%{
+transform:translateY(-10px);
+}
+
+}
+
+
+/* confetti */
+
+.confetti{
+
+position:absolute;
+
+width:10px;
+height:20px;
+
+top:-30px;
+
+animation:fall linear infinite;
+
+}
+
+@keyframes fall{
+
+100%{
+
+transform:
+translateY(120vh)
+rotate(720deg);
+
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>🎂 Happy Birthday 🎂</h1>
+
+<div class="card">
+
+<div id="fullCake">
+
+🎂
+
+<div class="candles">
+
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+
+</div>
+
+</div>
+
+
+<button id="blowBtn" onclick="blow()">
+Blow Candles 💨
+</button>
+
+
+<div id="knifeArea">
+
+<div id="knife">
+🔪
+</div>
+
+<button onclick="cutCake()">
+Cut Cake 🎂
+</button>
+
+</div>
+
+
+<div id="pieces">
+
+<div id="leftPiece">🍰</div>
+
+<div id="rightPiece">🍰</div>
+
+</div>
+
+
+<div class="message" id="msg">
+Happy Birthday ❤️
+</div>
+
+
+<div id="surpriseArea">
+
+<div class="finalPhoto">
+
+<div class="photoFrame"></div>
+
+<img src="photo.jpg">
+
+</div>
+
+<div class="giftBox"
+onclick="openGift()">
+
+🎁
+
+</div>
+
+</div>
+
+
+<div id="giftMessage">
+
+Wishing you endless happiness, love and beautiful moments ✨
+
+</div>
+
+</div>
+
+
+<script>
+
+for(let i=0;i<45;i++){
+
+let g=document.createElement("div");
+
+g.className="glitter";
+
+g.style.left=Math.random()*100+"vw";
+
+g.style.top=Math.random()*100+"vh";
+
+g.style.animationDelay=
+Math.random()*4+"s";
+
+document.body.appendChild(g);
+
+}
+
+
+function blow(){
+
+document
+.querySelectorAll(".flame")
+.forEach(f=>{
+
+f.style.opacity=0;
+
+f.style.transform=
+"translateX(-50%) scale(0)";
+
+});
+
+document
+.getElementById("blowBtn")
+.style.display="none";
+
+setTimeout(()=>{
+
+document
+.getElementById("knifeArea")
+.style.display="block";
+
+},1200);
+
+}
+
+
+function cutCake(){
+
+document
+.getElementById("fullCake")
+.style.display="none";
+
+document
+.getElementById("knifeArea")
+.style.display="none";
+
+
+document
+.getElementById("pieces")
+.style.display="flex";
+
+
+setTimeout(()=>{
+
+document
+.getElementById("leftPiece")
+.style.transform=
+"translateX(-80px) rotate(-20deg)";
+
+document
+.getElementById("rightPiece")
+.style.transform=
+"translateX(80px) rotate(20deg)";
+
+},100);
+
+
+createConfetti();
+
+
+setTimeout(()=>{
+
+document
+.getElementById("msg")
+.style.opacity=1;
+
+document
+.getElementById("surpriseArea")
+.style.display="block";
+
+},1000);
+
+}
+
+
+function openGift(){
+
+document
+.querySelector(".giftBox")
+.innerHTML="💝";
+
+document
+.getElementById("giftMessage")
+.style.opacity=1;
+
+createConfetti();
+
+}
+
+
+function createConfetti(){
+
+for(let i=0;i<60;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=
+Math.random()*100+"vw";
+
+c.style.background=
+`hsl(${Math.random()*360},
+100%,50%)`;
+
+c.style.animationDuration=
+(Math.random()*2+2)+"s";
+
+document.body.appendChild(c);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
